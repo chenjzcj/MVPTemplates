@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+
+<!-- template 是创建Activity时显示的界面功能-->
+<template
+    format="5"
+    revision="5"
+    name="Mvp Activity"
+    minApi="9"
+    minBuildApi="14"
+    description="创建一个新的 mvp activity">
+
+		<!-- category ：对应New的类别为Activity,模板创建时的一个文件夹类别-->
+    <category value="MVP" />
+    <formfactor value="Mobile" />
+
+		<!-- id ：唯一标识，最终通过该属性的值，获取用户输入值（文本框内容，是否选中）
+				name：界面上的类似label的提示语
+				type : 输入值类型
+				constraints：填写值的约束
+				suggest：建议值，比如填写ActivityName的时候，会给出一个布局文件的建议值。
+				default:默认值
+				help:底部显示的提升语-->
+				       
+    <parameter
+        id="activityClass"
+        name="Activity的名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${layoutToActivity(layoutName)}"
+        default="MainActivity"
+        help="所要创建Activity的名称" />
+
+    <parameter
+        id="isLauncher"
+        name="Launcher Activity"
+        type="boolean"
+        default="false"
+        help="是否为启动的Activity" />
+        
+ <parameter
+        id="hasMode"
+        name="Activity是否需要model层"
+        type="boolean"
+        default="true"
+        help="如果选中，创建一个有Model层的MVP Activity" />
+        
+    <parameter
+        id="generateLayout"
+        name="生成布局文件"
+        type="boolean"
+        default="true"
+        help="如果选中，则自动生成布局文件" />
+        
+
+    <parameter
+        id="layoutName"
+        name="布局名称"
+        type="string"
+        constraints="layout|unique|nonempty"
+        suggest="${activityToLayout(activityClass)}"
+        default="activity_main"
+        visibility="generateLayout"
+        help="要创建的Activity布局文件的名称" />
+
+
+  <parameter
+        id="contractClass"
+        name="Contract的名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(activityClass))}Contract"
+        default="MainContract"
+        help="Mvp模式-contract类名称" />
+        
+   <parameter
+        id="presenterClass"
+        name="Presenter的名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(activityClass))}Presenter"
+        default="MainPresenter"
+        help="Mvp模式-presenter类名称" />
+
+  <parameter
+        id="modelClass"
+        name="model的名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(activityClass))}Model"
+        visibility="hasMode"
+        default="MainModel"
+        help="Mvp模式-model类名称" />
+        
+   <parameter
+        id="repositoryClass"
+        name="model的实现类名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(activityClass))}Repository"
+        visibility="hasMode"
+        default="MainRepository"
+        help="Mvp模式-model的实现类名称" />
+
+   
+
+ 		<parameter
+        id="mvpSuperActivity"
+        name="Activity的类型"
+        type="enum"
+        constraints="activity|exists|nonempty"
+        default="appCompat_activity"
+        help="MVP Activity的类型" >
+        <option id="activity">Activity</option>
+        <option id="fragment_activity">FragmentActivity</option>
+        <option id="appCompat_activity">AppCompatActivity</option>
+    </parameter>
+    
+    
+    <parameter
+        id="packageName"
+        name="建立文件所在的包名："
+        type="string"
+        constraints="package"
+        default="com.mycompany.myapp" />
+        
+    <parameter
+        id="mvpLibraryPackageName"
+        name="mvp框架所在包名："
+        type="string"
+        constraints="package|nonempty"
+        default="com.felix.mvp"/>
+
+    <!-- 128x128 thumbnails relative to template.xml -->
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_blank_activity.png</thumb>
+    </thumbs>
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

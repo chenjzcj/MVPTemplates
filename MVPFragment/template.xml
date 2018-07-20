@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+
+<template
+    format="5"
+    revision="3"
+    name="Mvp Fragment"
+    minApi="7"
+    minBuildApi="14"
+    description="创建一个新的 mvp Fragment">
+
+    <category value="MVP" />
+    <formfactor value="Mobile" />
+				       
+    <parameter
+        id="fragmentClass"
+        name="Fragment的名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        default="MainFragment"
+        help="所要创建Fragment的名称" />
+
+        
+ 		<parameter
+        id="hasMode"
+        name="Fragment是否需要model层"
+        type="boolean"
+        default="true"
+        help="如果选中，创建一个有Model层的MVP Fragment" />
+        
+    <parameter
+        id="includeFactory"
+        name="是否包含Fragment生成方法？"
+        type="boolean"
+        default="true"
+        help="Generate static fragment factory methods for easy instantiation" />    
+        
+    <parameter
+        id="includeLayout"
+        name="生成布局文件"
+        type="boolean"
+        default="true"
+        help="如果选中，则自动生成布局文件" />
+        
+
+    <parameter
+        id="fragmentName"
+        name="Fragment布局文件名称"
+        type="string"
+        constraints="layout|nonempty|unique"
+        default="fragment_main"
+        visibility="includeLayout"
+        suggest="fragment_${classToResource(fragmentClass)}"
+        help="要创建的布局文件名称" />
+
+
+  	<parameter
+        id="contractClass"
+        name="Contract的名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(fragmentClass))}Contract"
+        default="MainContract"
+        help="Mvp模式-contract类名称" />
+        
+   <parameter
+        id="presenterClass"
+        name="Presenter名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(fragmentClass))}Presenter"
+        default="MainPresenter"
+        help="Mvp模式-presenter类名称" />
+
+  <parameter
+        id="modelClass"
+        name="model名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(fragmentClass))}Model"
+        visibility="hasMode"
+        default="MainModel"
+        help="Mvp模式-model类名称" />
+        
+   <parameter
+        id="repositoryClass"
+        name="model的实现类名称"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${underscoreToCamelCase(classToResource(fragmentClass))}Repository"
+        visibility="hasMode"
+        default="MainRepository"
+        help="Mvp模式-model的实现类名称" />
+
+   
+
+ 		<parameter
+        id="mvpSuperFragment"
+        name="Fragment的类型"
+        type="enum"
+        constraints="class|exists|nonempty"
+        default="fragment"
+        help="MVP Fragment的类型" >
+        <option id="fragment">Fragment</option>
+        <option id="fragment_v4">FragmentV4</option>
+        <option id="dialog_fragment">DialogFragment</option>
+        <option id="dialog_fragment_v4">DialogFragmentV4</option>
+    </parameter>
+    
+    
+    <parameter
+        id="packageName"
+        name="包名"
+        type="string"
+        constraints="package"
+        default="com.mycompany.myapp" />
+        
+    <parameter
+        id="mvpLibraryPackageName"
+        name="mvp框架所在包名"
+        type="string"
+        constraints="package|nonempty"
+        default="com.felix.mvp"/>
+
+    <!-- 128x128 thumbnails relative to template.xml -->
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_blank_activity.png</thumb>
+    </thumbs>
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>
