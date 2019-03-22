@@ -20,4 +20,6 @@
 	
 ####6.如果创建Activity的时候报错,请将MVPTemplates/MVPActivity/root/AndroidManifest.xml.ftl文件中的package="${packageName}"去掉
 
+###7. 增加支持AndroidX的框架jar包 mvpsupportandroidx.jar
+
 
